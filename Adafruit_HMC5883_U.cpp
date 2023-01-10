@@ -35,7 +35,7 @@
 #include "TinyWireM.h"
 #define Wire TinyWireM
 #else
-#include <Wi2c.h>
+#include <Wire.h>
 #endif
 
 #include <limits.h>
@@ -160,10 +160,11 @@ Adafruit_HMC5883_Unified::Adafruit_HMC5883_Unified(int32_t sensorID) {
     @brief  Setups the HW
 */
 /**************************************************************************/
-bool Adafruit_HMC5883_Unified::begin(TwoWire *wire) {
+bool Adafruit_HMC5883_Unified::begin(TwoWire *wire, uint32_t clock) {
   Wi2c = *wire;
   // Enable I2C
   Wi2c.begin();
+  Wi2c.setClock(clock);
 
   // Enable the magnetometer
   write8(HMC5883_ADDRESS_MAG, HMC5883_REGISTER_MAG_MR_REG_M, 0x00);
